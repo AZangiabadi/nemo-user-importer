@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NEMO User Importer</title>
+    <title>NEMO Qualification Importer</title>
     <style>
       :root {
         --bg: #f4efe6;
@@ -116,11 +116,6 @@
         cursor: pointer;
       }
 
-      button:hover {
-        filter: brightness(1.04);
-      }
-
-      .note,
       .status,
       .output {
         margin-top: 22px;
@@ -185,10 +180,10 @@
   </head>
   <body>
     <main class="shell">
-      <h1>NEMO User Importer</h1>
+      <h1>NEMO Qualification Importer</h1>
       <p class="lede">
-        Upload a spreadsheet, paste your NEMO API token, and run either a dry run
-        preview or a live import directly from the browser.
+        Upload an Excel file, paste your NEMO API token, and create qualification
+        entries with either a dry run preview or a live import.
       </p>
 
       <div class="grid">
@@ -200,8 +195,8 @@
             </div>
 
             <div class="field">
-              <label for="spreadsheet">Spreadsheet</label>
-              <input id="spreadsheet" name="spreadsheet" type="file" accept=".xlsx,.csv" required>
+              <label for="spreadsheet">Excel File</label>
+              <input id="spreadsheet" name="spreadsheet" type="file" accept=".xlsx" required>
             </div>
 
             <div class="check">
@@ -215,7 +210,7 @@
           {% if error %}
             <div class="status error">{{ error }}</div>
           {% elif status == "success" %}
-            <div class="status success">Import completed successfully.</div>
+            <div class="status success">Run completed successfully.</div>
           {% endif %}
 
           {% if result %}
@@ -228,14 +223,14 @@
         <aside class="card">
           <strong>Spreadsheet Rules</strong>
           <ul>
-            <li>Required headers: {% for header in expected_headers %}<code>{{ header }}</code>{% if not loop.last %}, {% endif %}{% endfor %}</li>
-            <li>The PI row should appear before student rows for a new project.</li>
-            <li>Use <code>PI</code> in the PI column for principal investigators.</li>
-            <li>If UNI is blank, the app generates one like <code>xxjd42</code>.</li>
-            <li>Use <code>External Academic</code>, not <code>External Academia</code>.</li>
+            <li>Column <code>B</code>: NEMO tool ID.</li>
+            <li>Column <code>C</code>: qualification date. Time is ignored.</li>
+            <li>Column <code>D</code>: user email address.</li>
+            <li>User email is matched against <code>/api/users/</code>.</li>
+            <li>Each qualification is posted to <code>/api/qualifications/</code> with <code>qualification_level = 1</code>.</li>
           </ul>
 
-          <p class="note micro">
+          <p class="micro">
             The uploaded file is processed temporarily for this request and then deleted.
             The token is used only to call the NEMO API for the current run.
           </p>

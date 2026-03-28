@@ -1,29 +1,14 @@
-# NEMO User Importer
+# NEMO Import Tools
 
-This project imports accounts, PI users, projects, and additional users into NEMO from an Excel or CSV spreadsheet.
+This project now has separate web apps for the two main workflows:
 
-It now supports two interfaces:
+- `app_user_importer.py` for accounts, PI users, projects, and other users
+- `app_qualification_importer.py` for qualification uploads
 
-- A desktop Tk app in `nemo_user_importer.py`
-- A deployable web app in `app.py`
+There are also desktop scripts:
 
-## Spreadsheet Rules
-
-Required headers:
-
-- `name`
-- `uni`
-- `email`
-- `pi`
-- `account type`
-- `project number`
-
-Important rules:
-
-1. Put the PI row before student rows when introducing a new project.
-2. Enter `PI` in the `pi` column for PI rows.
-3. If `uni` is blank, the app generates one like `xxjd42`.
-4. Use `External Academic`, not `External Academia`.
+- `nemo_user_importer.py`
+- `Qualifications entry.py`
 
 ## Run Locally With uv
 
@@ -35,27 +20,25 @@ source .venv/bin/activate
 uv sync
 ```
 
-Run the web app:
+Run the user importer web app:
 
 ```bash
-uv run python app.py
+uv run python app_user_importer.py
 ```
 
-Then open `http://127.0.0.1:8000`.
+Run the qualification importer web app:
+
+```bash
+uv run python app_qualification_importer.py
+```
+
+`app.py` is kept as a compatibility entrypoint for the qualification importer.
 
 ## Deploy Online
 
-This repo is ready for simple deployment on platforms like Render or Railway.
+Pick the app you want to deploy:
 
-- Start command: `gunicorn app:app`
-- Python version: `3.11` or newer
+- User importer: `gunicorn app_user_importer:app`
+- Qualification importer: `gunicorn app_qualification_importer:app`
 
-Because the app asks for a NEMO API token at runtime, you do not need to store the token in the repository.
-
-## Desktop Version
-
-If you still want the local popup workflow:
-
-```bash
-uv run python nemo_user_importer.py
-```
+Python `3.11+` is supported.
