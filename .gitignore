@@ -1,0 +1,25 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Local app output and OS/editor files
+.DS_Store
+__pycache__/
+nemo_user_importer_output.txt
+*.log
+~$*.xlsx
+
+# Local data, exports, and secrets
+*.xlsx
+*.csv
+*.json
+*.pdf
+*.docx
+*.pem

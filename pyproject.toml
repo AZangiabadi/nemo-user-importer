@@ -1,0 +1,12 @@
+[project]
+name = "nemo-setup"
+version = "0.1.0"
+description = "Web and desktop importer for NEMO users, accounts, and projects"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "flask>=3.1.0",
+    "gunicorn>=23.0.0",
+    "openpyxl>=3.1.5",
+    "requests>=2.33.0",
+]
